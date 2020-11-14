@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Card, Modal, Button, Row, Col} from 'react-bootstrap';
-import { PencilFill, Trash, PlusSquareFill} from 'react-bootstrap-icons';
+import { PencilFill, Trash} from 'react-bootstrap-icons';
 import './Quote.css';
 
 class QuoteCard extends Component {
