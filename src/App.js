@@ -2,7 +2,7 @@ import logo from './quotation.svg';
 import './App.css';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Card} from 'react-bootstrap';
+import {Card, Container} from 'react-bootstrap';
 
 class App extends Component {
   
@@ -17,54 +17,23 @@ class App extends Component {
           </p>
         </header>
         <div>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>quote</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">author</Card.Subtitle>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-              </Card.Text>
-              <Card.Link href="#">Edit</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-          </Card>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>quote</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">author</Card.Subtitle>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-              </Card.Text>
-              <Card.Link href="#">Edit</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-          </Card>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>quote</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">author</Card.Subtitle>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-              </Card.Text>
-              <Card.Link href="#">Edit</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-          </Card>
-          <Card style={{ width: '18rem' }}>
-            <Card.Body>
-              <Card.Title>quote</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">author</Card.Subtitle>
-              <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-              </Card.Text>
-              <Card.Link href="#">Edit</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-          </Card>
+          <Container>
+            <Card>
+              <Card.Header>Quote</Card.Header>
+              <Card.Body>
+                <blockquote className="blockquote mb-0">
+                  <p>
+                    {' '}
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
+                    erat a ante.{' '}
+                  </p>
+                  <footer className="blockquote-footer">
+                    Someone famous in <cite title="Source Title">Source Title</cite>
+                  </footer>
+                </blockquote>
+              </Card.Body>
+            </Card>
+          </Container>
         </div>
       </div> 
     );
