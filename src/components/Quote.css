@@ -1,0 +1,17 @@
+.card {
+    margin: 20px;
+  }
+
+.card-header {
+    background-color: #c8b4ba;
+}
+
+div.edit {
+  float: right;
+}
+
+div.delete {
+  float: right;
+}
+  
+ 
