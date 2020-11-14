@@ -9,7 +9,12 @@ class QuoteCard extends Component {
         super(props);
         this.state = {
           editShow: false,
-          deleteShow: false
+          deleteShow: false,
+          quoteNum: this.props.quoteNum,
+          id: this.props.id,
+          author: this.props.author,
+          content: this.props.content,
+          createdAt: this.props.createdAt
         };
         this.handleEditClose = this.handleEditClose.bind(this);
         this.handleEditShow = this.handleEditShow.bind(this);
@@ -43,14 +48,14 @@ class QuoteCard extends Component {
 
 
   render() {
-    const { editShow, deleteShow } = this.state;
+    const { editShow, deleteShow, content, quoteNum, author } = this.state;
   
     return (
         <div className="App">
             <Card>
                 <Card.Header>
                 <Row>
-                    <Col md={10} className="text-left">Quote</Col>
+                    <Col md={10} className="text-left">Quote {quoteNum}</Col>
                     <Col md={1}> <PencilFill onClick={this.handleEditShow}/></Col>
                     <Col md={1}><Trash onClick={this.handleDeleteShow}/></Col>
 
@@ -60,11 +65,11 @@ class QuoteCard extends Component {
                     <blockquote className="blockquote mb-0">
                         <p>
                         {' '}
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                        erat a ante.{' '}
+                        {content}
+                        {' '}
                         </p>
                         <footer className="blockquote-footer">
-                        Someone famous in <cite title="Source Title">Source Title</cite>
+                        By <cite title="Source Title">{author}</cite>
                         </footer>
                     </blockquote>
                 </Card.Body>

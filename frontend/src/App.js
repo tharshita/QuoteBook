@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Modal, Button} from 'react-bootstrap';
 import Quote from './components/QuoteCard.js';
 import {PlusSquareFill} from 'react-bootstrap-icons';
+import axios from 'axios';
 
 class App extends Component {
 
@@ -12,9 +13,26 @@ class App extends Component {
     super(props);
     this.state = {
       addShow: false,
+      quotes: []
     };
     this.handleAddClose = this.handleAddClose.bind(this);
     this.handleAddShow = this.handleAddShow.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchQuotes();
+  }
+
+  fetchQuotes = async () => {
+    await axios.get("http://localhost:8080/quote")
+      .then(response => {
+        console.log(response.data)
+        this.setState({
+          quotes: response.data
+        });
+      })
+      .catch(error => console.error(error))
+  
   }
 
   handleAddClose = () => {
@@ -47,21 +65,17 @@ class App extends Component {
         
         <div>
           <Container>
-            <Quote>
-
-            </Quote>
-            <Quote>
-              
-            </Quote>
-            <Quote>
-              
-            </Quote>
-            <Quote>
-              
-            </Quote>
-            <Quote>
-              
-            </Quote>
+            {this.state.quotes.map((quote,index) =>
+              <Quote
+                  quoteNum={index + 1}
+                  key={index}
+                  id={quote._id}
+                  author={quote.author}
+                  content={quote.content}
+                  createdAt={quote.createdAt}
+              />)
+            }
+            
           </Container>
         </div>
         {/*edit modal*/}

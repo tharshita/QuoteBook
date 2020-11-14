@@ -6,6 +6,8 @@ let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
 
+let cors = require('cors')
+
 require('dotenv').config();
 
 // Import Morgan
@@ -42,6 +44,7 @@ else
 
 
 //parse application/json and look for raw text
+app.use(cors()) 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
