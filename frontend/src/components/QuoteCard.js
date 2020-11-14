@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Card, Modal, Button, Row, Col} from 'react-bootstrap';
 import { PencilFill, Trash} from 'react-bootstrap-icons';
 import './Quote.css';
+import axios from 'axios';
 
 class QuoteCard extends Component {
 
@@ -20,6 +21,7 @@ class QuoteCard extends Component {
         this.handleEditShow = this.handleEditShow.bind(this);
         this.handleDeleteClose = this.handleDeleteClose.bind(this);
         this.handleDeleteShow = this.handleDeleteShow.bind(this);
+        this.handleDeleteQuote = this.handleDeleteQuote.bind(this);
     }
 
     handleEditClose = () => {
@@ -44,6 +46,17 @@ class QuoteCard extends Component {
         this.setState({
             deleteShow : true
         })
+    }
+
+    handleDeleteQuote = async () => {
+        await axios.delete("http://localhost:8080/quote/" + this.state.id)
+        .then(response => {
+            this.props.callback()
+            
+        })
+        .catch(error => console.error(error))
+
+        this.handleDeleteClose()
     }
 
 
@@ -101,7 +114,7 @@ class QuoteCard extends Component {
                 <Button variant="secondary" onClick={this.handleDeleteClose}>
                     Close
                 </Button>
-                <Button variant="danger" onClick={this.handleDeleteClose}>
+                <Button variant="danger" onClick={this.handleDeleteQuote}>
                     Yes
                 </Button>
                 </Modal.Footer>

@@ -17,6 +17,7 @@ class App extends Component {
     };
     this.handleAddClose = this.handleAddClose.bind(this);
     this.handleAddShow = this.handleAddShow.bind(this);
+    this.fetchQuotes = this.fetchQuotes.bind(this);
   }
 
   componentDidMount() {
@@ -73,6 +74,7 @@ class App extends Component {
                   author={quote.author}
                   content={quote.content}
                   createdAt={quote.createdAt}
+                  callback={this.fetchQuotes}
               />)
             }
             
