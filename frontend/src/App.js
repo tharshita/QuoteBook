@@ -2,7 +2,7 @@ import logo from './quotation.svg';
 import './App.css';
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Modal, Button} from 'react-bootstrap';
+import { Container, Modal, Button, Form, Row, Col} from 'react-bootstrap';
 import Quote from './components/QuoteCard.js';
 import {PlusSquareFill} from 'react-bootstrap-icons';
 import axios from 'axios';
@@ -13,11 +13,15 @@ class App extends Component {
     super(props);
     this.state = {
       addShow: false,
-      quotes: []
+      quotes: [],
+      newAuthor: '',
+      newContent: ''
     };
     this.handleAddClose = this.handleAddClose.bind(this);
     this.handleAddShow = this.handleAddShow.bind(this);
     this.fetchQuotes = this.fetchQuotes.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.handleAddQuote = this.handleAddQuote.bind(this);
   }
 
   componentDidMount() {
@@ -47,10 +51,32 @@ class App extends Component {
         addShow : true
     })
   }
+
+  handleAddQuote = async() => {
+    const quote = {
+      author: this.state.newAuthor,
+      content: this.state.newContent
+    }
+    await axios.post("http://localhost:8080/quote", quote)
+      .then(response => {
+        console.log(response.data)
+      })
+    .catch(error => console.error(error))
+    this.fetchQuotes()
+    this.handleAddClose()
+
+  }
+
+  onChangeHandler = (event) => {
+    const value = event.target.value;
+    this.setState({
+        [event.target.name] : value
+    })
+  }
   
 
   render() {
-    const {addShow} = this.state;
+    const {addShow, quotes} = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -66,7 +92,7 @@ class App extends Component {
         
         <div>
           <Container>
-            {this.state.quotes.map((quote,index) =>
+            {quotes.map((quote,index) =>
               <Quote
                   quoteNum={index + 1}
                   key={index}
@@ -85,12 +111,33 @@ class App extends Component {
           <Modal.Header closeButton>
           <Modal.Title>Add Quote</Modal.Title>
           </Modal.Header>
-          <Modal.Body>insert form</Modal.Body>
+          <Modal.Body>
+          <Form>
+            <Form.Group as={Row} controlId="formPlaintextEmail">
+              <Form.Label column sm="2">
+                Author
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control type="text" name="newAuthor" placeholder="Author" onChange={this.onChangeHandler} />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="formPlaintextPassword">
+              <Form.Label column sm="2">
+                Quote
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control type="text" name="newContent" placeholder="Quote" onChange={this.onChangeHandler}/>
+              </Col>
+            </Form.Group>
+          </Form>
+
+          </Modal.Body>
           <Modal.Footer>
           <Button variant="secondary" onClick={this.handleAddClose}>
               Close
           </Button>
-          <Button variant="primary" onClick={this.handleAddClose}>
+          <Button variant="primary" onClick={this.handleAddQuote}>
               Save Changes
           </Button>
           </Modal.Footer>
