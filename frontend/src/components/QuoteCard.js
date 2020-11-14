@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, Modal, Button, Row, Col} from 'react-bootstrap';
+import {Card, Modal, Button, Row, Col, Form} from 'react-bootstrap';
 import { PencilFill, Trash} from 'react-bootstrap-icons';
 import './Quote.css';
 import axios from 'axios';
@@ -15,13 +15,16 @@ class QuoteCard extends Component {
           id: this.props.id,
           author: this.props.author,
           content: this.props.content,
-          createdAt: this.props.createdAt
+          createdAt: this.props.createdAt,
+          newAuthor: this.props.author,
+          newContent: this.props.content
         };
         this.handleEditClose = this.handleEditClose.bind(this);
         this.handleEditShow = this.handleEditShow.bind(this);
         this.handleDeleteClose = this.handleDeleteClose.bind(this);
         this.handleDeleteShow = this.handleDeleteShow.bind(this);
         this.handleDeleteQuote = this.handleDeleteQuote.bind(this);
+        this.handleEditQuote = this.handleEditQuote.bind(this);
     }
 
     handleEditClose = () => {
@@ -59,6 +62,28 @@ class QuoteCard extends Component {
         this.handleDeleteClose()
     }
 
+    onChangeHandler = (event) => {
+        const value = event.target.value;
+        this.setState({
+            [event.target.name] : value
+        })
+    }
+
+    handleEditQuote = async() => {
+        const quote = {
+          author: this.state.newAuthor,
+          content: this.state.newContent
+        }
+        await axios.put("http://localhost:8080/quote/" + this.state.id, quote)
+          .then(response => {
+            this.props.callback()
+            console.log(response.data)
+          })
+        .catch(error => console.error(error))
+        this.handleEditClose()
+    
+      }
+
 
   render() {
     const { editShow, deleteShow, content, quoteNum, author } = this.state;
@@ -93,12 +118,33 @@ class QuoteCard extends Component {
                 <Modal.Header closeButton>
                 <Modal.Title>Edit Quote</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>insert form</Modal.Body>
+                <Modal.Body>
+                <Form>
+                    <Form.Group as={Row} controlId="formPlaintextEmail">
+                    <Form.Label column sm="2">
+                        Author
+                    </Form.Label>
+                    <Col sm="10">
+                        <Form.Control type="text" name="newAuthor" placeholder="Author" onChange={this.onChangeHandler} />
+                    </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="formPlaintextPassword">
+                    <Form.Label column sm="2">
+                        Quote
+                    </Form.Label>
+                    <Col sm="10">
+                        <Form.Control type="text" name="newContent" placeholder="Quote" onChange={this.onChangeHandler}/>
+                    </Col>
+                    </Form.Group>
+                </Form>
+
+                </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleEditClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={this.handleEditClose}>
+                <Button variant="primary" onClick={this.handleEditQuote}>
                     Save Changes
                 </Button>
                 </Modal.Footer>

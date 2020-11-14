@@ -118,7 +118,7 @@ class App extends Component {
                 Author
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" name="newAuthor" placeholder="Author" onChange={this.onChangeHandler} />
+                <Form.Control type="text" name="newAuthor" placeholder="Author" required onChange={this.onChangeHandler} />
               </Col>
             </Form.Group>
 
@@ -127,7 +127,7 @@ class App extends Component {
                 Quote
               </Form.Label>
               <Col sm="10">
-                <Form.Control type="text" name="newContent" placeholder="Quote" onChange={this.onChangeHandler}/>
+                <Form.Control type="text" name="newContent" placeholder="Quote" required onChange={this.onChangeHandler}/>
               </Col>
             </Form.Group>
           </Form>
